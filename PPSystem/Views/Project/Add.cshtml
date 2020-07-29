@@ -1,0 +1,93 @@
+﻿<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">PPSystem</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="#">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Project</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Add Project</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Add Project</div>
+                        </div>
+                        @using (Html.BeginForm("AddProject", "Project", FormMethod.Post))
+                        {
+                            <p style="color:red">@ViewBag.message</p>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="email2">Project Id</label>
+                                            <input type="text" class="form-control" id="projectId" name="projectId" placeholder="Project ID">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email2">Project Name</label>
+                                            <input type="text" class="form-control" id="description" name="description" placeholder="Project Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email2">Start Date</label>
+                                            <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start Date">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email2">End Date</label>
+                                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="End Date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action">
+                                <button class="btn btn-success">Submit</button>
+                                <button class="btn btn-danger">Cancel</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="pull-left">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.themekita.com">
+                            ThemeKita
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Help
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Licenses
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright ml-auto">
+                2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://www.themekita.com">ThemeKita</a>
+            </div>
+        </div>
+    </footer>
+</div>

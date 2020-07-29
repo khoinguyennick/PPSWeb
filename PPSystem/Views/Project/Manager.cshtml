@@ -1,0 +1,219 @@
+﻿<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Project</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="#">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Project</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Manager</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">@ViewBag.CurrentProject.Description</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        @using (Html.BeginForm("ChangeStatus", "Project", FormMethod.Post))
+                                        {
+                                            <label for="defaultSelect">Project Status</label>
+                                            <input type="hidden" name="projectId" id="projectId" value="@ViewBag.ProjectId" />
+                                            <input type="hidden" name="projectComanyId" id="projectComanyId" value="@ViewBag.ProjectCompanyId" />
+                                            <div class="input-group">
+                                                <select class="form-control form-control" id="defaultSelect" name="statusId">
+                                                    @{ foreach (var item in ViewBag.Status)
+                                                        {
+                                                            if (ViewBag.CurrentProject.StatusId == item.Id)
+                                                            {
+                                                                <option selected value="@item.Id">@item.Description</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.Description</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-default btn-border" type="submit">Change</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    @*@using (Html.BeginForm("UpdateProject", "Project", FormMethod.Post))
+                                    {
+                                        <input type = "hidden" name = "Id" id = "Id" value = "@ViewBag.ProjectUpdate.Id" />
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                    <div class="form-group">
+                                                        <label >Project Id</label>
+                                                        <input type="text" class="form-control" disabled value="@ViewBag.Project.ProjectCompanyId">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Description">Project Name</label>
+                                                        <input type="text" class="form-control" id="Description" name="Description" value="@ViewBag.ProjectUpdate.Description" placeholder="Project Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="StartDate">Start Date</label>
+                                                        <input type="date" class="form-control" id="StartDate" name="StartDate" value="@ViewBag.ProjectUpdate.StartDate" placeholder="Start Date">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EndDate">End Date</label>
+                                                        <input type="date" class="form-control"  id="EndDate" name="EndDate" value="@ViewBag.ProjectUpdate.EndDate" placeholder="End Date">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-default btn-border" type="submit">Change</button>
+                                        </div>
+                                    }*@
+                                    <div class="form-group">
+                                        @using (Html.BeginForm("AddEmpToProj", "Project", FormMethod.Post))
+                                        {
+                                            <input type="hidden" name="projectId" id="projectId" value="@ViewBag.ProjectId" />
+                                            <input type="hidden" name="projectComanyId" id="projectComanyId" value="@ViewBag.ProjectCompanyId" />
+                                            <label for="defaultSelect">Add Employee</label>
+                                            <div class="input-group">
+                                                <select class="form-control form-control" id="defaultSelect" name="empId">
+                                                    @{foreach (var item in ViewBag.EmpNotIn)
+                                                        {
+                                                            <option value="@item.Id">@item.Description</option>
+                                                        }
+                                                    }
+                                                </select>
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-default btn-border" type="submit">Add</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    @*<div class="form-group">
+            <label class="control-label">
+                Start Date
+            </label>
+            <div class="input-group">
+                <input type="datetime-local" value="@ViewBag.CurrentProject.StartDate" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                    <button class="btn btn-default btn-border" type="button">Change</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">
+                End Date
+            </label>
+            <div class="input-group">
+                <input type="datetime-local" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                    <button class="btn btn-default btn-border" type="button">Change</button>
+                </div>
+            </div>
+        </div>*@
+
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            Total Manpower
+                                        </label>
+                                        <p class="form-control-static" style="color:green">@ViewBag.Manpower</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            Total WorkHour
+                                        </label>
+                                        <p class="form-control-static" style="color:red">@ViewBag.TotalWork Hour</p>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="basic-datatables" class="display table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Employee ID</th>
+                                            <th>Name</th>
+                                            <th>Total Time</th>
+                                            <th>Manager</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Employee ID</th>
+                                            <th>Name</th>
+                                            <th>Total Time</th>
+                                            <th>Manager</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @{ foreach (var item in ViewBag.WorkTimeEmInProj)
+                                            {
+                                                <tr>
+                                                    <td>@item.EmpCompId</td>
+                                                    <td>@item.Description</td>
+                                                    <td style="color:forestgreen">@item.TotalTime hour</td>
+                                                    <td><a href="@Url.Action("WorkTimeDetail", "Project", new { empId = item.EmpId, projectId = ViewBag.ProjectId, projectName = ViewBag.CurrentProject.Description})" style="color:forestgreen">Manager</a></td>
+                                                    @*<td><input type="button" value="Remove" /></td>*@
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="pull-left">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.themekita.com">
+                            ThemeKita
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Help
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Licenses
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright ml-auto">
+                2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://www.themekita.com">ThemeKita</a>
+            </div>
+        </div>
+    </footer>
+</div>

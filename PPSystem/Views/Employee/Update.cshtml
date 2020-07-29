@@ -1,0 +1,109 @@
+﻿<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">PPSystem</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="#">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Employee</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Update Employee</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Update Employee</div>
+                        </div>
+                        @using (Html.BeginForm("UpdateEmp", "Employee", FormMethod.Post))
+                        {
+                            <input type="hidden" id="Id" name="Id" value="@ViewBag.EMP.Id">
+                            <input type="hidden" id="EmployeeCompanyId" name="EmployeeCompanyId" value="@ViewBag.EMP.EmployeeCompanyId">
+                            <p style="color:red">@ViewBag.message</p>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label>Employee Id</label>
+                                            <input type="text" disabled class="form-control" value="@ViewBag.EMP.EmployeeCompanyId">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="FullName">Employee Name</label>
+                                            <input type="text" class="form-control" id="FullName" name="FullName" value="@ViewBag.EMP.FullName" placeholder="Employee Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="RoleId">Role</label>
+                                            <select class="form-control form-control" id="RoleId" name="RoleId">
+                                                @{ foreach (var item in ViewBag.Roles)
+                                                    {
+                                                        if (item.Id == ViewBag.EMP.RoleId)
+                                                        {
+                                                            <option selected value="@item.Id">@item.Description</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.Description</option>
+                                                        }
+
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email2">Manpower</label>
+                                            <input type="text" class="form-control" id="Manpower" name="Manpower" value="@ViewBag.EMP.Manpower" placeholder="Manpower">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action">
+                                <button class="btn btn-success">Submit</button>
+                                <button class="btn btn-danger">Cancel</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="pull-left">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.themekita.com">
+                            ThemeKita
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Help
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Licenses
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright ml-auto">
+                2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://www.themekita.com">ThemeKita</a>
+            </div>
+        </div>
+    </footer>
+</div>

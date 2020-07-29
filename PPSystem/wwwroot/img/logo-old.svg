@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 35" width="108" height="35">
+	<defs>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="M0 0L108 0L108 35L0 35L0 0Z" />
+		</clipPath>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #ffffff } 
+		.txt1 { font-size: 30px;fill: #ffffff;font-family: "DejaVu Sans";font-weight: 400 } 
+		.txt2 { font-size: 14px;fill: #ffffff;font-family: "DejaVu Sans";font-weight: 400 } 
+	</style>
+	<g id="Clip-Path" clip-path="url(#cp1)">
+		<g id="Layer">
+			<g id="Layer">
+				<path id="Layer" class="shp0" d="M29.89 9.22L15.45 0.88L1 9.22L1 25.9L5.82 28.68L5.82 12L15.45 6.44L25.08 12L25.08 28.68L29.89 25.9L29.89 9.22Z" />
+				<text id="P " style="transform: matrix(1,0,0,1,7,32)" >
+					<tspan x="0" y="0" class="txt1">P</tspan>
+				</text>
+				<text id="PPSystem " style="transform: matrix(1,0,0,1,36.25,23.083)" >
+					<tspan x="0" y="0" class="txt2">PPSystem</tspan>
+				</text>
+			</g>
+		</g>
+	</g>
+</svg>

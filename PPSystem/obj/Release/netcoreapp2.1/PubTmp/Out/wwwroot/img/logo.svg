@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 35" width="108" height="35">
+	<defs>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="M0 0L108 0L108 35L0 35L0 0Z" />
+		</clipPath>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.txt0 { font-size: 14px;fill: #ffffff;font-family: "" Deja Vu  Sans"" } 
+	</style>
+	<g id="Clip-Path: Clip-Path" clip-path="url(#cp1)">
+		<g id="Clip-Path">
+			<g id="Layer">
+				<g id="Layer">
+					<text id=" " style="transform: matrix(1,0,0,1,7,32)" >
+					</text>
+					<text id="Project Porfolio" style="transform: matrix(1,0,0,1,2.25,23.083)" >
+						<tspan x="0" y="0" class="txt0">Project Porfolio</tspan>
+					</text>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
