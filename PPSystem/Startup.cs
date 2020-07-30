@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace PPSystem
 {
@@ -38,8 +40,16 @@ namespace PPSystem
                 options.IdleTimeout = TimeSpan.FromSeconds(900);
                 options.Cookie.HttpOnly = true;
                 // Make the session cookie essential
-                options.Cookie.IsEssential = true;
+                options.Cookie.IsEssential = false;
             });
+            
+            // Redis
+            var redisHost = Environment.GetEnvironmentVariable("REDIS_HOST");
+            if (string.IsNullOrEmpty(redisHost))
+                redisHost = "localhost:6379";
+            var redis = ConnectionMultiplexer.Connect(redisHost);
+            services.AddDataProtection()
+                .PersistKeysToStackExchangeRedis(redis, "data-protection-keys");
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -57,7 +67,7 @@ namespace PPSystem
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            // app.UseCookiePolicy();
             app.UseSession();
             app.UseMvc(routes =>
             {
