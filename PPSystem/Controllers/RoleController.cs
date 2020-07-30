@@ -13,7 +13,6 @@ namespace PPSystem.Controllers
     public class RoleController : Controller
     {
         ResponseAPI _responseAPI = new ResponseAPI();
-        private readonly string API_HOST = "https://projectporfoliosystem20200630144446.azurewebsites.net/";
 
         public async Task<IActionResult> Index()
         {
@@ -21,7 +20,7 @@ namespace PPSystem.Controllers
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
             #region Role
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/Roles");
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/Roles");
             var isEmpty = await rs.Content.ReadAsStringAsync();
             List<BaseModel> roleViewModels = new List<BaseModel>();
             if (rs.IsSuccessStatusCode)
@@ -50,7 +49,7 @@ namespace PPSystem.Controllers
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.DeleteAsync(API_HOST + "/api/Roles/" + roleId);
+            HttpResponseMessage rs = await client.DeleteAsync(_responseAPI.APIHost + "/api/Roles/" + roleId);
             return RedirectToAction("Index", "Role");
         }
 
@@ -66,7 +65,7 @@ namespace PPSystem.Controllers
             };
             var content = _responseAPI.GetContent<string>(roleName);
 
-            HttpResponseMessage rs = await client.PostAsync(API_HOST + "/api/Roles", content);
+            HttpResponseMessage rs = await client.PostAsync(_responseAPI.APIHost + "/api/Roles", content);
             return RedirectToAction("Add", "Role");
         }
         public async Task<IActionResult> Update(int roleId)
@@ -74,7 +73,7 @@ namespace PPSystem.Controllers
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/Roles/" + roleId);
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/Roles/" + roleId);
             var result = _responseAPI.ReadAsJsonAsync<BaseModel>(rs.Content).Result;
             ViewBag.Roles = result;
             return View();
@@ -87,7 +86,7 @@ namespace PPSystem.Controllers
 
             var content = _responseAPI.GetContent<BaseModel>(model);
 
-            HttpResponseMessage rs = await client.PutAsync(API_HOST + "/api/Roles", content);
+            HttpResponseMessage rs = await client.PutAsync(_responseAPI.APIHost + "/api/Roles", content);
             return RedirectToAction("Index", "Role");
         }
     }

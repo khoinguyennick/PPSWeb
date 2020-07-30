@@ -33,7 +33,10 @@ namespace PPSystem.Utils
         /// </summary>
         public ResponseAPI()
         {
-            this.APIHost = "https://projectporfoliosystem20200630144446.azurewebsites.net/";
+            var apiHost = Environment.GetEnvironmentVariable("_responseAPI.APIHost");
+            if (string.IsNullOrEmpty(apiHost))
+                apiHost = "https://api-ppsystem.tvvs.xyz/";
+            APIHost = apiHost;
         }
 
         public HttpClient Initial()

@@ -14,13 +14,12 @@ namespace PPSystem.Controllers
     public class UserController : Controller
     {
         ResponseAPI _responseAPI = new ResponseAPI();
-        private readonly string API_HOST = "https://projectporfoliosystem20200630144446.azurewebsites.net/";
         public async Task<IActionResult> Index()
         {
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/Account/Profile");
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/Account/Profile");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<UserModel>(rs.Content).Result;
@@ -41,7 +40,7 @@ namespace PPSystem.Controllers
                 Address = address
             };
             var content = _responseAPI.GetContent<EditUserProfileModel>(model);
-            HttpResponseMessage rs = await client.PutAsync(API_HOST + "api/Account/Information", content);
+            HttpResponseMessage rs = await client.PutAsync(_responseAPI.APIHost + "api/Account/Information", content);
             if (rs.IsSuccessStatusCode)
             {
                 TempData["Notify"] = "Edit Profile Successfully!";

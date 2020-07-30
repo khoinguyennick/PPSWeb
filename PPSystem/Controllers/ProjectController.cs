@@ -13,13 +13,12 @@ namespace PPSystem.Controllers
     public class ProjectController : Controller
     {
         ResponseAPI _responseAPI = new ResponseAPI();
-        private readonly string API_HOST = "https://projectporfoliosystem20200630144446.azurewebsites.net/";
         public async Task<IActionResult> Index()
         {
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "api/Project");
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "api/Project");
             var isEmpty = await rs.Content.ReadAsStringAsync();
 
             List<ProjectDetailViewModel> projectDetailViewModels = new List<ProjectDetailViewModel>();
@@ -30,7 +29,7 @@ namespace PPSystem.Controllers
                     var result = _responseAPI.ReadAsJsonAsync<List<ProjectViewModel>>(rs.Content).Result;
                     foreach (var project in result)
                     {
-                        rs = await client.GetAsync(API_HOST + "api/Project/" + project.Id);
+                        rs = await client.GetAsync(_responseAPI.APIHost + "api/Project/" + project.Id);
                         if (rs.IsSuccessStatusCode)
                         {
                             projectDetailViewModels.Add(_responseAPI.ReadAsJsonAsync<ProjectDetailViewModel>(rs.Content).Result);
@@ -41,7 +40,7 @@ namespace PPSystem.Controllers
             }
             ViewBag.Projects = projectDetailViewModels;
             #region Status
-            rs = await client.GetAsync(API_HOST + "api/Project/Status");
+            rs = await client.GetAsync(_responseAPI.APIHost + "api/Project/Status");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<BaseModel>>(rs.Content).Result;
@@ -60,7 +59,7 @@ namespace PPSystem.Controllers
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/Project/" + projectId);
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/Project/" + projectId);
             ProjectDetailViewModel projectDetailViewModel = new ProjectDetailViewModel();
             if (rs.IsSuccessStatusCode)
             {
@@ -68,7 +67,7 @@ namespace PPSystem.Controllers
                 ViewBag.CurrentProject = result;
             }
             #region Status
-            rs = await client.GetAsync(API_HOST + "api/Project/Status");
+            rs = await client.GetAsync(_responseAPI.APIHost + "api/Project/Status");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<BaseModel>>(rs.Content).Result;
@@ -76,7 +75,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region Manpower In Project
-            rs = await client.GetAsync(API_HOST + "api/Project/Manpower");
+            rs = await client.GetAsync(_responseAPI.APIHost + "api/Project/Manpower");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<ManpowerInProjectModel>>(rs.Content).Result;
@@ -90,7 +89,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region Add Employee
-            rs = await client.GetAsync(API_HOST + "/api/Employees/NotInProject/" + projectId);
+            rs = await client.GetAsync(_responseAPI.APIHost + "/api/Employees/NotInProject/" + projectId);
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<BaseModel>>(rs.Content).Result;
@@ -98,7 +97,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region TotalWorkTime
-            rs = await client.GetAsync(API_HOST + "/api/WorkTimeInProject/TotalWorkTime/" + projectId);
+            rs = await client.GetAsync(_responseAPI.APIHost + "/api/WorkTimeInProject/TotalWorkTime/" + projectId);
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<double>(rs.Content).Result;
@@ -106,7 +105,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region WorkTimeEmInProjModel
-            rs = await client.GetAsync(API_HOST + "/api/WorkTimeInProject/Employees/" + projectId);
+            rs = await client.GetAsync(_responseAPI.APIHost + "/api/WorkTimeInProject/Employees/" + projectId);
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<WorkTimeEmInProjModel>>(rs.Content).Result;
@@ -114,7 +113,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             //#region Project
-            //HttpResponseMessage rsProject = await client.GetAsync(API_HOST + "/api/Project/" + projectId);
+            //HttpResponseMessage rsProject = await client.GetAsync(_responseAPI.APIHost + "/api/Project/" + projectId);
             //var resultProject = _responseAPI.ReadAsJsonAsync<UpdateProjectModel>(rsProject.Content).Result;
             //ViewBag.ProjectUpdate = resultProject;
             //#endregion
@@ -128,7 +127,7 @@ namespace PPSystem.Controllers
         //    string token = HttpContext.Session.GetString("userToken");
         //    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
         //    var content = _responseAPI.GetContent<UpdateProjectModel>(model);
-        //    HttpResponseMessage rsUpdate = await client.PutAsync(API_HOST + "/api/Project", content);
+        //    HttpResponseMessage rsUpdate = await client.PutAsync(_responseAPI.APIHost + "/api/Project", content);
         //    return RedirectToAction("Manager", "Project");
         //}
         [HttpPost]
@@ -155,7 +154,7 @@ namespace PPSystem.Controllers
 
             var content = _responseAPI.GetContent<AddProjectModel>(model);
 
-            HttpResponseMessage rs = await client.PostAsync(API_HOST + "api/Project", content);
+            HttpResponseMessage rs = await client.PostAsync(_responseAPI.APIHost + "api/Project", content);
             string message = "";
             if (rs.IsSuccessStatusCode)
             {
@@ -183,7 +182,7 @@ namespace PPSystem.Controllers
                 StatusId = statusId
             };
             var content = _responseAPI.GetContent<ProjectStatusModel>(projectStatusModel);
-            HttpResponseMessage rs = await client.PutAsync(API_HOST + "/api/Project/Status", content);
+            HttpResponseMessage rs = await client.PutAsync(_responseAPI.APIHost + "/api/Project/Status", content);
             ProjectDetailViewModel projectDetailViewModel = new ProjectDetailViewModel();
             if (rs.IsSuccessStatusCode)
             {
@@ -203,7 +202,7 @@ namespace PPSystem.Controllers
                 EmlpoyeeId = empId
             };
             var content = _responseAPI.GetContent<AddEmpToProjModel>(addEmpToProjModel);
-            HttpResponseMessage rs = await client.PostAsync(API_HOST + "/api/Project/Employee", content);
+            HttpResponseMessage rs = await client.PostAsync(_responseAPI.APIHost + "/api/Project/Employee", content);
             ProjectDetailViewModel projectDetailViewModel = new ProjectDetailViewModel();
             if (rs.IsSuccessStatusCode)
             {
@@ -219,7 +218,7 @@ namespace PPSystem.Controllers
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/WorkTimeInProject/WorkTimeDetail/" + projectId + "/" + empId);
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/WorkTimeInProject/WorkTimeDetail/" + projectId + "/" + empId);
             if (rs.IsSuccessStatusCode)
             {
                 List<WorkTimeDetailStringModel> workTimeDetail = new List<WorkTimeDetailStringModel>();
@@ -251,7 +250,7 @@ namespace PPSystem.Controllers
                 ProjectId = projectId
             };
             var content = _responseAPI.GetContent<WorkTimeAddModel>(model);
-            HttpResponseMessage rs = await client.PostAsync(API_HOST + "/api/WorkTimeInProject/WorkTime", content);
+            HttpResponseMessage rs = await client.PostAsync(_responseAPI.APIHost + "/api/WorkTimeInProject/WorkTime", content);
             return RedirectToAction("WorkTimeDetail", "Project", new { empId = empId, projectId = projectId, projectName = projectName });
         }
     }

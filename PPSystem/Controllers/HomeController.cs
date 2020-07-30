@@ -14,7 +14,6 @@ namespace PPSystem.Controllers
     public class HomeController : Controller
     {
         ResponseAPI _responseAPI = new ResponseAPI();
-        private readonly string API_HOST = "https://projectporfoliosystem20200630144446.azurewebsites.net/";
         public async Task<IActionResult> Index()
         {
             if (HttpContext.Session.GetString("userToken") == null)
@@ -25,7 +24,7 @@ namespace PPSystem.Controllers
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
             #region Employees Statistics
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "api/Employees/Statistics");
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "api/Employees/Statistics");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<EmployeeStatisticsModel>(rs.Content).Result;
@@ -90,7 +89,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region Newest Employees
-            rs = await client.GetAsync(API_HOST + "api/Employees/Newest");
+            rs = await client.GetAsync(_responseAPI.APIHost + "api/Employees/Newest");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<NewestEmp>>(rs.Content).Result;
@@ -98,7 +97,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region Newest Employees
-            rs = await client.GetAsync(API_HOST + "api/Employees/InActive");
+            rs = await client.GetAsync(_responseAPI.APIHost + "api/Employees/InActive");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<InactiveModel>(rs.Content).Result;
@@ -106,7 +105,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region Newest Project
-            rs = await client.GetAsync(API_HOST + "api/Project/Newest");
+            rs = await client.GetAsync(_responseAPI.APIHost + "api/Project/Newest");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<NewestProjectModel>>(rs.Content).Result;
@@ -122,7 +121,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region Manpower In Project
-            rs = await client.GetAsync(API_HOST + "api/Project/Manpower");
+            rs = await client.GetAsync(_responseAPI.APIHost + "api/Project/Manpower");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<ManpowerInProjectModel>>(rs.Content).Result;
@@ -138,7 +137,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region Project Statistics
-            rs = await client.GetAsync(API_HOST + "api/Project/Statistics");
+            rs = await client.GetAsync(_responseAPI.APIHost + "api/Project/Statistics");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<ProjectStatisticsModel>(rs.Content).Result;

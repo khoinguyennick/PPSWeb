@@ -13,13 +13,12 @@ namespace PPSystem.Controllers
     public class EmployeeController : Controller
     {
         ResponseAPI _responseAPI = new ResponseAPI();
-        private readonly string API_HOST = "https://projectporfoliosystem20200630144446.azurewebsites.net/";
         public async Task<IActionResult> Index()
         {
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/Employees");
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/Employees");
             var isEmpty = await rs.Content.ReadAsStringAsync();
             List<EmployeeViewModel> employeeViewModels = new List<EmployeeViewModel>();
             if (rs.IsSuccessStatusCode)
@@ -36,7 +35,7 @@ namespace PPSystem.Controllers
 
             }
             #region Role
-            rs = await client.GetAsync(API_HOST + "/api/Roles");
+            rs = await client.GetAsync(_responseAPI.APIHost + "/api/Roles");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<BaseModel>>(rs.Content).Result;
@@ -51,9 +50,9 @@ namespace PPSystem.Controllers
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/Employees");
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/Employees");
             #region Role
-            rs = await client.GetAsync(API_HOST + "/api/Roles");
+            rs = await client.GetAsync(_responseAPI.APIHost + "/api/Roles");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<BaseModel>>(rs.Content).Result;
@@ -71,9 +70,9 @@ namespace PPSystem.Controllers
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/Employees");
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/Employees");
             #region Role
-            rs = await client.GetAsync(API_HOST + "/api/Roles");
+            rs = await client.GetAsync(_responseAPI.APIHost + "/api/Roles");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<BaseModel>>(rs.Content).Result;
@@ -81,7 +80,7 @@ namespace PPSystem.Controllers
             }
             #endregion
             #region Employee
-            HttpResponseMessage rsEmp = await client.GetAsync(API_HOST + "/api/Employees/" + empId);
+            HttpResponseMessage rsEmp = await client.GetAsync(_responseAPI.APIHost + "/api/Employees/" + empId);
             var resultEmp = _responseAPI.ReadAsJsonAsync<EmployeeEditModel>(rsEmp.Content).Result;
             ViewBag.EMP = resultEmp;
             #endregion
@@ -97,9 +96,9 @@ namespace PPSystem.Controllers
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/Employees");
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/Employees");
             #region Role
-            rs = await client.GetAsync(API_HOST + "/api/Roles");
+            rs = await client.GetAsync(_responseAPI.APIHost + "/api/Roles");
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<BaseModel>>(rs.Content).Result;
@@ -108,7 +107,7 @@ namespace PPSystem.Controllers
             #endregion
             var content = _responseAPI.GetContent<EmployeeEditModel>(model);
 
-            HttpResponseMessage rsUpdate = await client.PutAsync(API_HOST + "/api/Employees", content);
+            HttpResponseMessage rsUpdate = await client.PutAsync(_responseAPI.APIHost + "/api/Employees", content);
             return RedirectToAction("Index", "Employee");
         }
 
@@ -144,7 +143,7 @@ namespace PPSystem.Controllers
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
             var content = _responseAPI.GetContent<EmployeeCreateModel>(model);
 
-            HttpResponseMessage rs = await client.PostAsync(API_HOST + "/api/Employees", content);
+            HttpResponseMessage rs = await client.PostAsync(_responseAPI.APIHost + "/api/Employees", content);
             string message = "";
             if (rs.IsSuccessStatusCode)
             {
@@ -172,7 +171,7 @@ namespace PPSystem.Controllers
                 WorkHour = workTime
             };
             var content = _responseAPI.GetContent<EmpWorkTimeAddModel>(model);
-            HttpResponseMessage rs = await client.PostAsync(API_HOST + "/api/WorkTime", content);
+            HttpResponseMessage rs = await client.PostAsync(_responseAPI.APIHost + "/api/WorkTime", content);
             return RedirectToAction("EmployeeWork", "Employee", new { empId = empId, emp = emp });
         }
 
@@ -181,7 +180,7 @@ namespace PPSystem.Controllers
             HttpClient client = new HttpClient();
             string token = HttpContext.Session.GetString("userToken");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpResponseMessage rs = await client.GetAsync(API_HOST + "/api/WorkTime/" + empId);
+            HttpResponseMessage rs = await client.GetAsync(_responseAPI.APIHost + "/api/WorkTime/" + empId);
             if (rs.IsSuccessStatusCode)
             {
                 var result = _responseAPI.ReadAsJsonAsync<List<WorkTimeSearchModel>>(rs.Content).Result;
